@@ -14,10 +14,10 @@ decpl=4  // Dec places of minutes output
 //**************CD****************
 function ClearFormCD(){
 
-    document.InputFormCD.lat1.value = "0:00.00";
-    document.InputFormCD.lat2.value = "0:00.00";
-    document.InputFormCD.lon1.value = "0:00.00";
-    document.InputFormCD.lon2.value = "0:00.00";
+    document.InputFormCD.lat1.value = "0.0";
+    //document.InputFormCD.lat2.value = "0.0";
+    document.InputFormCD.lon1.value = "0.0";
+    //document.InputFormCD.lon2.value = "0.0";
     document.OutputFormCD.crs12.value = "";
     document.OutputFormCD.crs21.value = "";
     document.OutputFormCD.d12.value = "";
@@ -27,22 +27,22 @@ function ClearFormCD(){
 
 function ComputeFormCD(){
     //get select  values
-var signlat1,signlat2,signlon1,signlon2,dc
+var signlat1,signlon1,dc
 var lat1,lat2,lon1,lon2
 var d,crs12,crs21
 var argacos
 var a,invf
   /* Input and validate data */
 signlat1=signlatlon(document.InputFormCD.NS1)
-signlat2=signlatlon(document.InputFormCD.NS2)
+//signlat2=signlatlon(document.InputFormCD.NS2)
 signlon1=signlatlon(document.InputFormCD.EW1)
-signlon2=signlatlon(document.InputFormCD.EW2)
+//signlon2=signlatlon(document.InputFormCD.EW2)
 
 
 lat1=(Math.PI/180)*signlat1*checkField(document.InputFormCD.lat1)
-lat2=(Math.PI/180)*signlat2*checkField(document.InputFormCD.lat2)
+lat2=(Math.PI/180)*0.0
 lon1=(Math.PI/180)*signlon1*checkField(document.InputFormCD.lon1)
-lon2=(Math.PI/180)*signlon2*checkField(document.InputFormCD.lon2)
+lon2=(Math.PI/180)*signlon1*checkField(document.InputFormCD.lon1)
 
 //alert("lat1=" + lat1 + "lon1=" + lon1 +"\nlat2=" +lat2+ "lon2="+lon2)
 
@@ -465,9 +465,9 @@ alert(result)
 <FORM NAME="InputFormCD" method=POST>
 <TABLE border=1>
 <TR>
-<TD COLSPAN=2><DIV ALIGN=CENTER>Lat1</DIV></TD>
+<TD COLSPAN=2><DIV ALIGN=CENTER>Latitude</DIV></TD>
 
-<TD COLSPAN=2><DIV ALIGN=CENTER>Lon1</DIV></TD>
+<TD COLSPAN=2><DIV ALIGN=CENTER>Longitude</DIV></TD>
 <CAPTION> Input Data
 </TR>
 <TR>
@@ -478,20 +478,7 @@ alert(result)
 <TD><SELECT Name="EW1">
    <OPTION SELECTED>W<OPTION>E</SELECT></TD>
 </TR>
-<TR>
-<TD COLSPAN=2><DIV ALIGN=CENTER>Lat2</DIV></TD>
 
-<TD COLSPAN=2><DIV ALIGN=CENTER>Lon2</DIV></TD>
-
-</TR>
-<TR>
-<TD><INPUT TYPE=TEXT NAME=lat2 SIZE=10 value="0.0"  ></TD>
-<TD><SELECT Name="NS2">
-   <OPTION SELECTED>N<OPTION>S</SELECT></TD>
-<TD><INPUT TYPE=TEXT NAME=lon2 SIZE=10 value="0.0"></TD>
-<TD><SELECT Name="EW2">
-   <OPTION SELECTED>W<OPTION>E</SELECT></TD>
-</TR>
 </TABLE>
 </FORM>
 <P></P>
