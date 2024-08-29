@@ -233,11 +233,9 @@ function MakeArray(n){
 }
 
 function dconv(selection){
-   dc=new MakeArray(3)
-   dc[1]=1.
-   dc[2]=1.852 //km
-   dc[3]=185200.0/160934.40 // 1.150779448 sm
-   dc[4]=185200.0/30.48 // 6076.11549  //ft
+   dc=new MakeArray(1)
+   dc[1]=1.852 //km
+   dc[2]=185200.0/30.48 // 6076.11549  //ft
    return dc[selection.selectedIndex+1]
 }
 
