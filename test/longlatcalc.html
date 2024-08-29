@@ -456,10 +456,67 @@ alert(result)
 
 // -- done hiding from old browsers -->
 
+
+// calculating angle
+
+
+function ClearAngleForm(){
+
+    document.InputAngleForm.stick.value = "0.0";
+    document.InputAngleForm.shadow.value = "0.0";
+    document.OutputAngleForm.angle.value = "";
+
+
+}
+
+function ComputeAngleForm(){
+    //get select  values
+var hstick,lshadow
+var angle
+
+	hstick=document.InputAngleForm.stick
+	lshadow=document.InputAngleForm.shadow
+	angle=Math.atan(lshadow/hstick)*180/Math.PI
+	
+	document.OutputAngleForm.angle.value=angle
+}
+
+	
 </SCRIPT>
 </HEAD>
 
 <BODY>
+
+
+<FORM NAME="InputAngleForm" method=POST>
+<TABLE border=1>
+<TR>
+<TD COLSPAN=2><DIV ALIGN=CENTER>Stick Height (cm)</DIV></TD>
+
+<TD COLSPAN=2><DIV ALIGN=CENTER>Shadow Length (cm)</DIV></TD>
+<CAPTION> Input Data
+</TR>
+<TR>
+<TD><INPUT TYPE=TEXT NAME=stick  SIZE=10 value="0.0"  ></TD>
+<TD><INPUT TYPE=TEXT NAME=shadow SIZE=10 value="0.0"></TD>
+</TR>
+
+</TABLE>
+</FORM>
+
+<FORM NAME="OutputAngleForm" method=POST>
+<TABLE border=1>
+<TR>
+<TD><DIV ALIGN=CENTER>Angle (degrees)</DIV></TD>
+</TR>
+<TR>
+<TD><INPUT TYPE=TEXT NAME=angle    SIZE=9 ></TD>
+</TR>
+<CAPTION> Output
+</TABLE>
+
+<P></P>
+
 
 <CENTER>
 <FORM NAME="InputFormCD" method=POST>
@@ -499,8 +556,6 @@ alert(result)
 <CAPTION> Output
 </TABLE>
 </CENTER>
-<P></P>
-
 
 <P>
 <INPUT TYPE="button" VALUE="Compute" onClick="ComputeFormCD()">
