@@ -1,4 +1,3 @@
-<!-- hide this script tag's contents from old browsers
 // Copyright 1997 Ed Williams. All rights reserved.  Used with permission
 
 decpl=4  // Dec places of minutes output
@@ -541,5 +540,3 @@ result +=objName + "." + i + " = " + obj[i] + "\n"
 }
 alert(result)
 }
-// -- done hiding from old browsers -->
-
