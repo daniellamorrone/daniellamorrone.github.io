@@ -1,11 +1,9 @@
 <HTML>
 
 <HEAD>
-<TITLE>Javascript Great Circle Calculator</TITLE>
+<TITLE>Distance Calculator</TITLE>
 <META name="description"
-content="Javascript Great Circle Calculator using ellipsoidal earth models">
-<META name="keywords"
-content="FAI,great circle, ellipsoid, geodesic, course, navigation">
+content="Distance Calculator">
 
 <SCRIPT LANGUAGE="JAVASCRIPT">
 
@@ -16,10 +14,10 @@ decpl=4  // Dec places of minutes output
 //**************CD****************
 function ClearFormCD(){
 
-    document.InputFormCD.lat1.value = "0.0";
-    document.InputFormCD.lat2.value = "0.0";
-    document.InputFormCD.lon1.value = "0.0";
-    document.InputFormCD.lon2.value = "0.0";
+    document.InputFormCD.lat1.value = "0:00.00";
+    document.InputFormCD.lat2.value = "0:00.00";
+    document.InputFormCD.lon1.value = "0:00.00";
+    document.InputFormCD.lon2.value = "0:00.00";
     document.OutputFormCD.crs12.value = "";
     document.OutputFormCD.crs21.value = "";
     document.OutputFormCD.d12.value = "";
@@ -36,15 +34,15 @@ var argacos
 var a,invf
   /* Input and validate data */
 signlat1=signlatlon(document.InputFormCD.NS1)
-//signlat2=signlatlon(document.InputFormCD.NS2)
+signlat2=signlatlon(document.InputFormCD.NS2)
 signlon1=signlatlon(document.InputFormCD.EW1)
-//signlon2=signlatlon(document.InputFormCD.EW2)
+signlon2=signlatlon(document.InputFormCD.EW2)
 
 
 lat1=(Math.PI/180)*signlat1*checkField(document.InputFormCD.lat1)
-lat2=(Math.PI/180)*0
+lat2=(Math.PI/180)*signlat2*checkField(document.InputFormCD.lat2)
 lon1=(Math.PI/180)*signlon1*checkField(document.InputFormCD.lon1)
-lon2=(Math.PI/180)*signlon1*checkField(document.InputFormCD.lon1)
+lon2=(Math.PI/180)*signlon2*checkField(document.InputFormCD.lon2)
 
 //alert("lat1=" + lat1 + "lon1=" + lon1 +"\nlat2=" +lat2+ "lon2="+lon2)
 
