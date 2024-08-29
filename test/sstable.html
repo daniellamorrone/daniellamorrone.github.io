@@ -1,0 +1,814 @@
+<!-- This is all being put into a Wix HTML iFrame custom embed -->
+<!-- Copy and paste starting from here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbit Table</title>
+    <style>
+        /* Put border-box on everything! This makes element sizes more predictable. */
+        * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+        /* CSS class used to hide text that is needed for a screen reader, but not desired/needed for sighted users */
+        .visuallyHidden:not(:focus):not(:active) {position: absolute; width: 1px; height: 1px; margin: -1px;border: 0;padding: 0;white-space: nowrap;clip-path: inset(100%);clip: rect(00 0 0);overflow: hidden; }
+
+        /* Base fonts */
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .orbitScales {
+            display: flex;
+            flex-wrap: wrap;
+            color: #ffffff;
+            background: rgba(40,40,40,0.9);
+            flex-grow: 1;
+            overflow: hidden;
+            /* The fancy blue border, and the margin/padding to accomodate it */
+            box-shadow: 0 0 0 5px rgb(43, 134, 197), 0 15px 0 5px rgb(43, 134, 197);
+            border-radius: 0 0 15px 15px;
+            padding: 5px 5px 2px 5px;
+            margin: 10px 5px 20px 5px;
+        }
+
+        .orbitScales > label, .orbitScales > input {
+            width: 50%;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            border-radius: 0;
+            border: 1px solid black;
+            padding: 5px;
+            position:relative;
+        }
+
+        /* The diameter and orbit table styles */
+        table {
+            text-align: left;
+            width: 100%;
+            border-spacing: 0 2px;
+        }
+
+        thead, td, input, select {
+            text-align: center;
+            height: 100%;
+            min-height: 1.5rem;
+        }
+
+        /* Lighten every odd numbered row */
+        tbody tr:nth-of-type(2n+1) {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Styling for the buttons */
+        button {
+            display: block;
+            width: calc(50% - 10px);
+            border: none;
+            font-weight: bold;
+            color: white;
+            background: rgb(224, 57, 42);
+            border-radius: 50px;
+            padding: 5px;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+        button:hover, button:focus {
+            background: rgba(255, 128, 82)
+        }    
+
+    </style>
+    <!-- [if !IE]><!-->
+        <style>
+            /* The orbits table becomes nearly unreadable on very small screens. This is an attempt to correct for that with extreme reformatting */
+            /* Internet Explorer doesn't like this, so the conditional comments should hide this on that browser */
+            @media only screen and (max-width: 500px) {
+                table, thead, tbody, th, td, tr {
+                    display: block;
+                    font-size:14px;
+                    text-align: left;
+                    min-height: 25px;
+                }
+                /* Hide the table header. The below snippet is to ensure it is hidden to sighted users, but still visible to screen readers */
+                thead, .empty {
+                    position: absolute; width: 1px; height: 1px; margin: -1px;border: 0;padding: 0;white-space: nowrap;clip-path: inset(100%);clip: rect(00 0 0);overflow: hidden; 
+                }
+
+                /* Make each cell a row, and use before elements as labels */
+                tbody td, tbody th {
+                    position: relative;
+                    padding-left: 50%;
+                }
+
+                tbody td:before, tbody th:before {
+                    position: absolute;
+                    left: 0;
+                    width: calc(50% - 5px);
+                    padding-right: 5px;
+                    white-space: nowrap;
+                }
+
+                /* Labels */
+                /* Note that these are not read by screen readers; the text written directly into the table already handles that */
+                tbody th:before {
+                    content:'Planet';
+                }
+                tbody td:nth-of-type(1):before {
+                    content:'Object size';
+                }
+                tbody td:nth-of-type(2):before {
+                    content:'Diameter (mm)';
+                }
+                tbody td:nth-of-type(3):before {
+                    content:'Orbital radius (km)';
+                }
+                tbody td:nth-of-type(4):before {
+                    content:'Orbit colour';
+                }
+
+                /* Make the buttons display as a column */
+                .orbitScales button {
+                    width: 100%;
+                    margin: 5px 0;
+                }
+            }
+        </style>
+    <!--<![endif]-->
+
+</head>
+<body>
+    <!-- Orbit scaling form begins -->
+    <form id="orbitScales" class="orbitScales" autocomplete="off">
+        <!-- <div class="container">
+            <div class="inputsContainer"> -->
+                <table>
+                    <!-- Column headers -->
+                    <thead>
+                        <tr>
+                            <th scope="col">Planet</th>
+                            <th scope="col">Object Size</th>
+                            <th scope="col">Diameter (mm)</th>
+                            <th scope="col">Average orbital radius (km)</th>
+                            <th scope="col">Orbit colour</th>
+                        </tr>
+                    </thead>
+                    <!-- Content -->
+                    <tbody>
+                        <tr>
+                            <th scope="row">Sun</th>
+                            <td>
+                                <label for="sunRadiusObjects" class="visuallyHidden">Select an object size for the Sun</label>
+                                <select name="sunRadiusObjects" id="sunRadiusObjects">
+                                    <option value="other">Enter your own</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label for="sunRadius" class="visuallyHidden">Enter the desired radius for the Sun</label>
+                                <input type="number" name="sunRadius" id="sunRadius" min="0">
+                            </td>
+                            <td class="empty"></td>
+                            <td class="empty"></td>
+                        </tr>
+                        <tr id="mercury">
+                            <th scope="row">Mercury</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="mercuryColour" class="visuallyHidden">Choose the colour for Mercury's
+                                    orbit</label>
+                                <select name="mercuryColour" id="mercuryColour">
+                                    <option value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option selected value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="venus">
+                            <th scope="row">Venus</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="venusColour" class="visuallyHidden">Choose the colour for Venus's orbit</label>
+                                <select name="venusColour" id="venusColour">
+                                    <option value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option selected value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="earth">
+                            <th scope="row">Earth</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="earthColour" class="visuallyHidden">Choose the colour for Earth's orbit</label>
+                                <select name="earthColour" id="earthColour">
+                                    <option value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option selected value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="moon">
+                            <th scope="row">Moon</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="moonColour" class="visuallyHidden">Choose the colour for the Moon's
+                                    orbit</label>
+                                <select name="moonColour" id="moonColour">
+                                    <option value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option selected value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="mars">
+                            <th scope="row">Mars</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="marsColour" class="visuallyHidden">Choose the colour for Mars's orbit</label>
+                                <select name="marsColour" id="marsColour">
+                                    <option selected value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="jupiter">
+                            <th scope="row">Jupiter</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="jupiterColour" class="visuallyHidden">Choose the colour for Jupiter's
+                                    orbit</label>
+                                <select name="jupiterColour" id="jupiterColour">
+                                    <option value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option selected value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="saturn">
+                            <th scope="row">Saturn</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="saturnColour" class="visuallyHidden">Choose the colour for Saturn's
+                                    orbit</label>
+                                <select name="saturnColour" id="saturnColour">
+                                    <option value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option selected value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="uranus">
+                            <th scope="row">Uranus</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="uranusColour" class="visuallyHidden">Choose the colour for Uranus's
+                                    orbit</label>
+                                <select name="uranusColour" id="uranusColour">
+                                    <option value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option selected value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="neptune">
+                            <th scope="row">Neptune</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="neptuneColour" class="visuallyHidden">Choose the colour for Neptune's
+                                    orbit</label>
+                                <select name="neptuneColour" id="neptuneColour">
+                                    <option value="#ff0000">red</option>
+                                    <option selected value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="kuiperBelt">
+                            <th scope="row">Kuiper Belt Object</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="kuiperBeltColour" class="visuallyHidden">Choose the colour for the Kuiper
+                                    Belt</label>
+                                <select name="kuiperBeltColour" id="kuiperBeltColour">
+                                    <option value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option selected value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="oortCloud">
+                            <th scope="row">Oort Cloud Object</th>
+                            <td class="object"></td>
+                            <td class="diameter"></td>
+                            <td class="orbitalRadius"></td>
+                            <td>
+                                <label for="oortCloudColour" class="visuallyHidden">Choose the colour for the Oort
+                                    Cloud</label>
+                                <select name="oortCloudColour" id="oortCloudColour">
+                                    <option value="#ff0000">red</option>
+                                    <option value="#0000ff">blue</option>
+                                    <option value="#ffff00">yellow</option>
+                                    <option value="#00ff00">green</option>
+                                    <option value="#ffffff">white</option>
+                                    <option value="#000000">black</option>
+                                    <option value="#00ffff">cyan</option>
+                                    <option value="#ff00ff">magenta</option>
+                                    <option value="#ff6600">orange</option>
+                                    <option value="#9900cc">violet</option>
+                                    <option value="#996633">brown</option>
+                                    <option selected value="#999999">grey</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            <!-- </div>
+        </div> -->
+    </form>
+    <!-- Orbit scaling form ends -->
+    <script>
+        const embeddedTable = {
+            // Solar radius in km, from original demo
+            rSun: 695989,
+            // Sun radius element
+            sunDiameterElement: null,
+            sunObjectSizeElement: null,
+            // Stored data for each planet
+            // format is, id: the id of the table row, radius in km, orbit in km, followed by the DOM elements where the scaled information is displayed
+            // radius = volumetric mean radius
+            // orbit = semimajor axis
+            // Planet data from https://nssdc.gsfc.nasa.gov/planetary/factsheet/
+            planets: [
+                {
+                    id: 'mercury',
+                    name: 'Mercury',
+                    radius: 2439.7,
+                    orbit: 57.91 * 1000000,
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                },
+                {
+                    id: 'venus',
+                    name: 'Venus',
+                    radius: 6051.8,
+                    orbit: 108.21 * 1000000,
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                },
+                {
+                    id: 'earth',
+                    name: 'Earth',
+                    radius: 6371,
+                    orbit: 149.6 * 1000000,
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                },
+                {
+                    id: 'moon',
+                    name: 'The Moon',
+                    radius: 1737.4,
+                    orbit: 384400,
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null,
+                    offsetOrbit: 149.6 * 1000000, // Earth's orbital radius
+                },
+                {
+                    id: 'mars',
+                    name: 'Mars',
+                    radius: 3389.5,
+                    orbit: 227.92 * 1000000,
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                },
+                {
+                    id: 'jupiter',
+                    name: 'Jupiter',
+                    radius: 69911,
+                    orbit: 778.57 * 1000000,
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                },
+                {
+                    id: 'saturn',
+                    name: 'Saturn',
+                    radius: 58232,
+                    orbit: 1433.53 * 1000000,
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                },
+                {
+                    id: 'uranus',
+                    name: 'Uranus',
+                    radius: 25362,
+                    orbit: 2872.46 * 1000000,
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                },
+                {
+                    id: 'neptune',
+                    name: 'Neptune',
+                    radius: 24622,
+                    orbit: 4495.06 * 1000000,
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                },
+                {
+                    id: 'kuiperBelt',
+                    name: 'The Kuiper Belt',
+                    radius: 1150, // From original demo
+                    orbit: 5984000000, // 40 AU
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                },
+                {
+                    id: 'oortCloud',
+                    name: 'The Oort Cloud',
+                    radius: 848, // From original demo
+                    orbit: 1.496 * 10**12, // 10000 AU
+                    diameterElement: null,
+                    orbitElement: null,
+                    colourElement: null,
+                    sizeElement:null
+                }
+            ],
+            objectSizes: [
+                { min:-Infinity, max: 0.05, name: `too small to see` },
+                { min: 0.05, max: 0.1, name: `width of a hair` },
+                { min: 0.1, max: 0.5, name: `grain of salt` },
+                { min: 0.5, max: 1, name: `poppy seed` },
+                { min: 1, max: 2, name: `mustard seed` },
+                { min: 2, max: 3, name: `coriander seed` },
+                { min: 3, max: 4, name: `peppercorn` },
+                { min: 4, max: 8, name: `popcorn kernel` },
+                { min: 8, max: 10, name: `coffee bean` },
+                { min: 10, max: 12, name: `peanut` },
+                { min: 12, max: 15, name: `hazelnut` },
+                { min: 15, max: 30, name: `grape` },
+                { min: 30, max: 40, name: `radish` },
+                { min: 40, max: 50, name: `plum` },
+                { min: 50, max: 80, name: `orange` },
+                { min: 80, max: 120, name: `grapefruit` },
+                { min: 120, max: 150, name: `canteloupe` },
+                { min: 150, max: 180, name: `head of lettuce` },
+                { min: 180, max: 220, name: `soccer ball` },
+                { min: 220, max: 400, name: `beach ball` },
+                { min: 400, max: 800, name: `exercise ball` },
+                { min: 800, max: 1100, name: `hula hoop` },
+                { min: 1100, max: 1500, name: `height of child` },
+                { min: 1500, max: 2000, name: `height of an adult` },
+                { min: 2000, max: 3000, name: `size of a van` },
+                { min: 3000, max: 12000, name: `size of a bus` },
+            ],
+            init() {
+                // Grab the DOM elements for data relevant to each planet
+                this.planets.forEach(planetObject=>{
+                    planetObject.diameterElement = document.querySelector(`#${planetObject.id} .diameter`);
+                    planetObject.orbitElement = document.querySelector(`#${planetObject.id} .orbitalRadius`);
+                    planetObject.colourElement = document.querySelector(`#${planetObject.id} select`);
+                    planetObject.sizeElement = document.querySelector(`#${planetObject.id} .object`);
+                });
+
+                // Grab the DOM element for where the sun diameter will be input
+                this.sunDiameterElement = document.getElementById('sunRadius');
+
+                // Grab the DOM element for the select element for Sun Size
+                this.sunObjectSizeElement = document.getElementById('sunRadiusObjects');
+
+                // Sort the object sizes by minimum size
+                this.objectSizes.sort((a,b)=>a.min-b.min);
+
+                // Fill in the options
+                this.objectSizes.reverse().forEach(object=>{
+                    if (object.min > 45) {
+                        const sizeOption = document.createElement('option');
+                        sizeOption.innerText = object.name;
+                        sizeOption.setAttribute('value',`${object.max}`);
+                        this.sunObjectSizeElement.appendChild(sizeOption);
+                    }
+                });
+
+                // Event listener for the Sun Object Size selector
+                this.sunObjectSizeElement.addEventListener('change',(event)=>{
+                    event.preventDefault();
+                    this.getSunObjectSize();
+                });
+
+                // Event listener for calculating the planet diameters + orbital radii
+                document.getElementById('orbitScales').addEventListener('input',(event)=>{
+                    event.preventDefault();
+                    this.updateTable();
+                });
+
+                // Event listener for calculating the planet diameters + orbital radii
+                document.getElementById('orbitScales').addEventListener('submit',(event)=>{
+                    event.preventDefault();
+                    this.updateTable();
+                });
+
+                // Set up the window message listener
+                window.onmessage=(event)=>this.handleMessage(event);
+
+                // Tell parent who we are
+                this.identifySelfToParent('orbitsForm');
+            },
+            // Update Sun size based on the select menu
+            getSunObjectSize() {
+                const getValue=this.sunObjectSizeElement.value;
+                if (getValue==="other") {
+                    this.sunDiameterElement.disabled=false;
+                }
+                else {
+                    this.sunDiameterElement.disabled=true;
+                    this.sunDiameterElement.value=getValue;
+                }
+                this.updateTable();
+            },
+            // Clear the planet table
+            clearTable() {
+                const elements = document.querySelectorAll('.diameter, .orbitalRadius');
+                elements.forEach(element=>element.innerText="");
+
+                // Reset the draw values, and empty the table cells where the numbers are written
+                this.planets.forEach(planetObject=>{
+                    planetObject.drawKm = 0;
+                    planetObject.drawOffset = 0;
+                    planetObject.diameterElement.innerText = "";
+                    planetObject.orbitElement.innerText = "";
+                });
+
+                this.sunDiameterElement.value="";
+            },
+            // Update the table with new numbers
+            updateTable() {
+                // get the Sun diameter in mm
+                const sunDiameter = parseFloat(this.sunDiameterElement.value);
+
+                // Check that the value exists, and is a finite number
+                if (sunDiameter && isFinite(sunDiameter)) {
+                    // Calculate the scale factor to apply. model diameter in mm / actual diameter in mm
+                    const scaleFactor = sunDiameter / (2000000 * this.rSun)
+                    // Iterate through each planet, calculating the values
+                    const planetInfoPacket=[];
+                    this.planets.forEach(planetObject => {
+                        // Calculate diameter and write it to the diameter element
+                        const scaledDiameter = 2000000 * scaleFactor * planetObject.radius;
+                        if (planetObject.diameterElement) {
+                            planetObject.diameterElement.innerText = this.formatNumber(scaledDiameter, 2);
+                        }
+                        // Calculate scaled orbit and write it to the orbit element
+                        const scaledOrbit = scaleFactor * planetObject.orbit;
+                        if (planetObject.orbitElement) {
+                            planetObject.orbitElement.innerText = this.formatNumber(scaledOrbit,2);
+                        }
+
+                        // Get the object size and display it
+                        if (planetObject.sizeElement) {
+                            planetObject.sizeElement.innerText = this.getObjectSize(scaledDiameter);
+                        }
+
+                        // Add to the planet info packet to send over to the map embed
+                        const planetInfo = {
+                            drawKm: scaledOrbit,
+                            drawOffset: (planetObject.offsetOrbit) ? scaleFactor * planetObject.offsetOrbit : null,
+                            drawColour: planetObject.colourElement.value,
+                            name: planetObject.name
+                        }
+                        planetInfoPacket.push(planetInfo);
+                    });
+                    this.sendMessage('mapEmbed','updatePlanets',[planetInfoPacket]);
+                }
+                // If no valid value is given, clear the table
+                else {
+                    this.clearTable();
+                }
+            },
+            // Take a number and format it to the desired precision
+            formatNumber(number,precision) {
+                // 0 or lower precisions are nonsense, round up to 1
+                precision = Math.max(1,precision);
+                // Use the built in function
+                const precisionOutput = number.toPrecision(precision);
+                // No exponent? No problem! Return it.
+                if (!precisionOutput.includes('e')) {
+                    return precisionOutput;
+                }
+                // Otherwise, we have some work to do
+                else {
+                    // Split the string across the 'e'
+                    const parts = precisionOutput.split('e');
+
+                    // The part after e is the order of magnitude; parse as an integer
+                    const orderOfMagnitude = parseInt(parts[1]);
+                    // Split the base across the '.'; skipping this step results in extraneous decimals
+                    const baseParts=parts[0].split('.');
+                    // Initialize the string we'll be outputting
+                    let output;
+                    // Negative order of magnitude
+                    if (orderOfMagnitude<0) {
+                        output='0.';
+                        // Just put the appropriate number of zeros in front of the base
+                        // Use one less than the OOM, because the first digit in the base counts as one
+                        for (let i=0;i<Math.abs(orderOfMagnitude)-1;i++) {
+                            output+='0';
+                        }
+                        output += baseParts.join('');
+                    }
+                    // Positive?
+                    else {
+                        // Start with the first digit
+                        output = baseParts[0];
+                        // Make the trailing digits into an array
+                        const trailingDigits = baseParts[1].split('');
+                        // Add trailing digits, until we run out of them. Then add zeros.
+                        for (let i=0;i<Math.abs(orderOfMagnitude);i++) {
+                            if (i<trailingDigits.length) {
+                                output+=trailingDigits[i];
+                            }
+                            else {
+                                output+='0';
+                            }
+                        }
+                    }
+                    // Done!
+                    return output;
+                }
+            },
+            // Recieve message from the website
+            handleMessage(message) {
+                const data=message.data;
+                if (data) {
+                    if (data.method) {
+                        if (!data.arguments) {
+                            data.arguments=[];
+                        }
+                        this[data.method](...data.arguments);
+                    }
+                }
+            },
+            // Get object size
+            getObjectSize(size) {
+                for (let i=0;i<this.objectSizes.length;i++) {
+                    if (size > this.objectSizes[i].min && size < this.objectSizes[i].max) {
+                        return this.objectSizes[i].name;
+                    }
+                }
+                return '';
+            },
+            // Send messages to the website
+            sendMessage(target, method, arguments=[]) {
+                window.parent.postMessage({target:target, method:method, arguments:arguments},'*');
+            },
+            identifySelfToParent(id) {
+                window.parent.postMessage({id:id},'*');
+            }
+        }
+        embeddedTable.init();
+    </script>
+</body>
+</html>
+<!-- End copy and paste -->
