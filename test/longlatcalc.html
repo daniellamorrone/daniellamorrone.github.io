@@ -472,9 +472,9 @@ function ComputeAngleForm(){
 var hstick,lshadow
 var angle
 
-	hstick=document.InputAngleForm.stick
-	lshadow=document.InputAngleForm.shadow
-	angle=Math.atan(lshadow/hstick)*180/Math.PI
+	hstick=document.InputAngleForm.stick.value
+	lshadow=document.InputAngleForm.shadow.value
+	angle= Math.atan ( lshadow / hstick ) * 180 / Math.PI
 	
 	document.OutputAngleForm.angle.value=angle
 }
