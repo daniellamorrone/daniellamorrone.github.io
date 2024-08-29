@@ -623,22 +623,6 @@ alert(result)
 </HEAD>
 
 <BODY>
-<CENTER>
-<H1>Great Circle Calculator.</H1>
-</CENTER>
-
-<CENTER><H3>By Ed Williams</H3></CENTER>
-<P> You need Javascript enabled if you want this page to do anything useful!
-For Netscape, it's under Options/Network Preferences/Languages.
-</P>
-<H3> <A NAME="CrsDist">Compute true course and distance between points.</A> </H3>
-
-<P> Enter lat/lon of points, select distance units and earth model and click
-"compute". Lat/lons may be entered in DD.DD, DD:MM.MM or
-DD:MM:SS.SS formats.</P>
-<p> Note that if either point is very close to a pole,
-the course may be inaccurate, because of its extreme sensitivity to position
-and inevitable rounding error. </P>
 
 <CENTER>
 <FORM NAME="InputFormCD" method=POST>
@@ -697,10 +681,7 @@ and inevitable rounding error. </P>
 <P> Distance Units: 
 <SELECT Name="Dunit">
    <OPTION>nm<OPTION SELECTED>km<OPTION>sm<OPTION>ft</SELECT>
-    Earth model:
-<SELECT Name="Model">
-   <OPTION SELECTED>WGS84/NAD83/GRS80
-</SELECT>
+    
 </P>
 <P>
 <INPUT TYPE="button" VALUE="Compute" onClick="ComputeFormCD()">
