@@ -486,8 +486,8 @@ var angle
 
 function ClearCircForm(){
 
-    document.InputCircForm.ang.value = "0.0";
-    document.InputCircForm.dist.value = "0.0";
+    document.InputCircForm.ang.value = document.OutputAngleForm.angle.value;
+    document.InputCircForm.dist.value = document.OutputFormCD.d12.value;
     document.OutputCircForm.circ.value = "";
 }
 
@@ -600,7 +600,6 @@ var circu
 
 <div style="float:left;">
 		<center>
-			<FORM NAME="InputCircForm" method=POST>
 				<TABLE border=1>
 					<TR>
 						
@@ -610,13 +609,13 @@ var circu
 						<CAPTION> Calculating Circumference
 					</TR>
 					<TR>
-						<TD><INPUT TYPE=TEXT NAME=ang  SIZE=10 value=document.OutputAngleForm.angle.value  ></TD>
-						<TD><INPUT TYPE=TEXT NAME=dist  SIZE=10 value=document.OutputFormCD.d12.value  ></TD>
+						<FORM NAME="OutputAngleForm" method=POST><TD><INPUT TYPE=TEXT NAME=angle  SIZE=10 ></TD></FORM>
+						<FORM NAME="OutputFormCD" method=POST><TD><INPUT TYPE=TEXT NAME=d12  SIZE=10 ></TD></FORM>
 					</TR>
 		
 				</TABLE>
-			</FORM>
-		
+			
+	
 			<FORM NAME="OutputCircForm" method=POST>
 				<TABLE border=1>
 					<TR>
@@ -634,7 +633,7 @@ var circu
 </div>
 
 	<P>
-		<INPUT TYPE="button"  VALUE="Reset" onClick="ClearCircForm()">
+		<INPUT TYPE="button"  VALUE="Reset" onClick="ClearCircForm();ClearAngleForm();ClearFormCD()">
 		<INPUT TYPE="button" VALUE="Compute" onClick="ComputeCircForm()">
 	</P>
 </center>
