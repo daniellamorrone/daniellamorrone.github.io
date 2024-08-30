@@ -486,8 +486,6 @@ var angle
 
 function ClearCircForm(){
 
-    document.InputCircForm.ang.value = document.OutputAngleForm.angle.value;
-    document.InputCircForm.dist.value = document.OutputFormCD.d12.value;
     document.OutputCircForm.circ.value = "";
 }
 
@@ -496,8 +494,8 @@ function ComputeCircForm(){
 var angl,distn
 var circu
 
-	angl=document.InputCircForm.ang.value
-	distn=document.InputCircForm.dist.value
+	angl=document.OutputAngleForm.angle.value
+	distn=document.OutputFormCD.d12.value
 	circu= 360*distn/angl
 	
 	document.OutputCircForm.circ.value=circu
@@ -598,21 +596,6 @@ var circu
 <center>
 <div style="display:inline-block; width:50%;text-align:center;">
 		<center>
-				<TABLE border=1>
-					<TR>
-						
-							<TD COLSPAN=1><DIV ALIGN=CENTER>Angle (degrees)</DIV></TD>
-							<TD COLSPAN=1><DIV ALIGN=CENTER>Distance (km)</DIV></TD>
-						
-						<CAPTION> Calculating Circumference
-					</TR>
-					<TR>
-						<TD><FORM NAME="OutputAngleForm" method=POST><TD><INPUT TYPE=TEXT NAME=angle  SIZE=10 ></TD></FORM></TD>
-						<TD><FORM NAME="OutputFormCD" method=POST><TD><INPUT TYPE=TEXT NAME=d12  SIZE=10 ></TD></FORM></TD>
-					</TR>
-		
-				</TABLE>
-			
 	
 			<FORM NAME="OutputCircForm" method=POST>
 				<TABLE border=1>
