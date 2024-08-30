@@ -596,11 +596,11 @@ var circu
 
 
 <center>
-<div style=“display:inline-block; width:50%;text-align:center;“>
+<div style="display:inline-block; width:50%;text-align:center;">
 
-<div style=“float:left;“>
+<div style="float:left;">
 		<center>
-			<FORM NAME=“InputCircForm” method=POST>
+			<FORM NAME="InputCircForm" method=POST>
 				<TABLE border=1>
 					<TR>
 						
@@ -610,14 +610,14 @@ var circu
 						<CAPTION> Calculating Circumference
 					</TR>
 					<TR>
-						<TD><INPUT TYPE=TEXT NAME=ang  SIZE=10 value=OutputAngleForm.angle.value  ></TD>
-						<TD><INPUT TYPE=TEXT NAME=dist  SIZE=10 value=OutputFormCD.d12.value  ></TD>
+						<TD><INPUT TYPE=TEXT NAME=ang  SIZE=10 value=.OutputAngleForm.angle.value  ></TD>
+						<TD><INPUT TYPE=TEXT NAME=dist  SIZE=10 value=.OutputFormCD.d12.value  ></TD>
 					</TR>
 		
 				</TABLE>
 			</FORM>
 		
-			<FORM NAME=“OutputCircForm” method=POST>
+			<FORM NAME="OutputCircForm" method=POST>
 				<TABLE border=1>
 					<TR>
 						<TD><DIV ALIGN=CENTER>Circumference (km)</DIV></TD>
@@ -625,16 +625,17 @@ var circu
 					</TR>
 					<CAPTION> Output
 				</TABLE>
-			
+			<P>
+				<INPUT TYPE="button"  VALUE="Reset" onClick="ClearCircForm()">
+				<INPUT TYPE="button" VALUE="Compute" onClick="ComputeCircForm()">
+			</P>
+	
 			</FORM>
 		</center>
 	</div>	
 	
 </div>
-<P>
-	<INPUT TYPE=“button”  VALUE=“Reset” onClick=“ClearCircForm()“>
-	<INPUT TYPE=“button” VALUE=“Compute” onClick=“ComputeCircForm()“>
-</P>
+
 	
 </center>
 	
