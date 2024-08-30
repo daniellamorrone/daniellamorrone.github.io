@@ -479,6 +479,30 @@ var angle
 	document.OutputAngleForm.angle.value=angle
 }
 
+
+
+
+// calculating circ
+
+function ClearAngleForm(){
+
+    document.InputCircForm.ang.value = "0.0";
+    document.InputCircForm.dist.value = "0.0";
+    document.OutputCircForm.circ.value = "";
+}
+
+	
+function ComputeCircForm()
+var angl,distn
+var circu
+
+	angl=document.InputCircForm.ang.value
+	distn=document.InputCircForm.dist.value
+	circu= 360*distn/angl
+	
+	document.OutputCircForm.circ.value=circu
+}
+
 	
 </SCRIPT>
 </HEAD>
@@ -550,9 +574,9 @@ var angle
 					<TR>
 						<TD><DIV ALIGN=CENTER>Distance</DIV></TD>
 		
-						<TD COLSPAN=1><INPUT TYPE=TEXT NAME=d12    SIZE=9 ></TD>
+						<TD COLSPAN=1><INPUT TYPE=TEXT NAME=d12    SIZE=10 ></TD>
 						<TD COLSPAN=1><SELECT Name="Dunit">
-						   <OPTION SELECTED>km<OPTION>ft</SELECT>	
+						   <OPTION SELECTED>km</SELECT>	
 						</TD>
 					</TR>
 					<CAPTION> Output
@@ -570,5 +594,55 @@ var angle
 	
 </center>
 
+<center>
+<div style="display:inline-block; width:50%;text-align:center;">
+
+<div style="float:left;">
+		<center>
+			<FORM NAME="InputCircForm" method=POST>
+				<TABLE border=1>
+					<TR>
+						
+							<TD COLSPAN=1><DIV ALIGN=CENTER>Angle (degrees)</DIV></TD>
+							<TD COLSPAN=1><DIV ALIGN=CENTER>Distance (km)</DIV></TD>
+						
+						<CAPTION> Calculating Circumference
+					</TR>
+					<TR>
+						<TD><INPUT TYPE=TEXT NAME=ang  SIZE=10 value="0.0"  >
+							<FORM NAME="OutputAngleForm" method=POST>
+								<TD><INPUT TYPE=TEXT NAME=angle  value="0.0"  ></TD>
+							</FORM></TD>
+						<TD><INPUT TYPE=TEXT NAME=dist  SIZE=10 value="0.0"  >
+							<FORM NAME="OutputFormCD" method=POST>
+								<TD><INPUT TYPE=TEXT NAME=d12 value="0.0"></TD>
+							</FORM></TD>
+					</TR>
+		
+				</TABLE>
+			</FORM>
+		
+			<FORM NAME="OutputCircForm" method=POST>
+				<TABLE border=1>
+					<TR>
+						<TD><DIV ALIGN=CENTER>Circumference (km)</DIV></TD>
+						<TD><INPUT TYPE=TEXT NAME=circ    SIZE=10 ></TD>
+					</TR>
+					<CAPTION> Output
+				</TABLE>
+			
+			</FORM>
+		</center>
+	</div>	
+	
+</div>
+<P>
+	<INPUT TYPE="button"  VALUE="Reset" onClick="ClearCircForm()">
+	<INPUT TYPE="button" VALUE="Compute" onClick="ComputeCircForm()">
+</P>
+	
+</center>
+
+	
 </BODY>
 </HTML>
