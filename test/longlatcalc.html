@@ -584,90 +584,92 @@ var angle
 
 
 
+<div style="display:inline-block; width:60%;text-align:center;">
 
-
-<div style="float:left;">
-<center>
-	<FORM NAME="InputAngleForm" method=POST>
-		<TABLE border=1>
-			<TR>
-				<TD COLSPAN=1><DIV ALIGN=CENTER>Stick Height (cm)</DIV></TD>
-
-				<TD COLSPAN=1><DIV ALIGN=CENTER>Shadow Length (cm)</DIV></TD>
-				<CAPTION> Input Data
-			</TR>
-			<TR>
-				<TD><INPUT TYPE=TEXT NAME=stick  value="0.0"  ></TD>
-				<TD><INPUT TYPE=TEXT NAME=shadow value="0.0"></TD>
-			</TR>
-
-		</TABLE>
-	</FORM>
-
-	<FORM NAME="OutputAngleForm" method=POST>
-		<TABLE border=1>
-			<TR>
-				<TD><DIV ALIGN=CENTER>Angle (degrees)</DIV></TD>
-				<TD><INPUT TYPE=TEXT NAME=angle    SIZE=10 ></TD>
-			</TR>
-			<CAPTION> Output
-		</TABLE>
-
-		<P>
-			<INPUT TYPE="button" VALUE="Compute" onClick="ComputeAngleForm()">
-			<INPUT TYPE="button"  VALUE="Reset" onClick="ClearAngleForm()">
-		</P>
-	
-	</FORM>
-</center>
-</div>	
-
-<div style="float:right;">
-<CENTER>
-	<FORM NAME="InputFormCD" method=POST>
-		<TABLE border=1>
-			<TR>
-				<TD COLSPAN=2><DIV ALIGN=CENTER>Latitude</DIV></TD>
-				
-				<TD COLSPAN=2><DIV ALIGN=CENTER>Longitude</DIV></TD>
-				<CAPTION> Input Data
-			</TR>
-			<TR>
-				<TD><INPUT TYPE=TEXT NAME=lat1  SIZE=10 value="0.0"  ></TD>
-				<TD><SELECT Name="NS1">
-				   <OPTION SELECTED>N<OPTION>S</SELECT></TD>
-				<TD><INPUT TYPE=TEXT NAME=lon1 SIZE=10 value="0.0"></TD>
-				<TD><SELECT Name="EW1">
-				   <OPTION SELECTED>W<OPTION>E</SELECT></TD>
-			</TR>
+	<div style="float:left;">
+		<center>
+			<FORM NAME="InputAngleForm" method=POST>
+				<TABLE border=1>
+					<TR>
+						<TD COLSPAN=1><DIV ALIGN=CENTER>Stick Height (cm)</DIV></TD>
+		
+						<TD COLSPAN=1><DIV ALIGN=CENTER>Shadow Length (cm)</DIV></TD>
+						<CAPTION> Input Data
+					</TR>
+					<TR>
+						<TD><INPUT TYPE=TEXT NAME=stick  value="0.0"  ></TD>
+						<TD><INPUT TYPE=TEXT NAME=shadow value="0.0"></TD>
+					</TR>
+		
+				</TABLE>
+			</FORM>
+		
+			<FORM NAME="OutputAngleForm" method=POST>
+				<TABLE border=1>
+					<TR>
+						<TD><DIV ALIGN=CENTER>Angle (degrees)</DIV></TD>
+						<TD><INPUT TYPE=TEXT NAME=angle    SIZE=10 ></TD>
+					</TR>
+					<CAPTION> Output
+				</TABLE>
+		
+				<P>
+					<INPUT TYPE="button" VALUE="Compute" onClick="ComputeAngleForm()">
+					<INPUT TYPE="button"  VALUE="Reset" onClick="ClearAngleForm()">
+				</P>
 			
-		</TABLE>
-	</FORM>
-	<P></P>
-	<P></P>
+			</FORM>
+		</center>
+	</div>	
 	
-	
-	<FORM NAME="OutputFormCD" method=POST>
-		<TABLE border=1>
-			<TR>
-				<TD><DIV ALIGN=CENTER>Distance</DIV></TD>
+	<div style="float:right;">
+		<CENTER>
+			<FORM NAME="InputFormCD" method=POST>
+				<TABLE border=1>
+					<TR>
+						<TD COLSPAN=2><DIV ALIGN=CENTER>Latitude</DIV></TD>
+						
+						<TD COLSPAN=2><DIV ALIGN=CENTER>Longitude</DIV></TD>
+						<CAPTION> Input Data
+					</TR>
+					<TR>
+						<TD><INPUT TYPE=TEXT NAME=lat1  SIZE=10 value="0.0"  ></TD>
+						<TD><SELECT Name="NS1">
+						   <OPTION SELECTED>N<OPTION>S</SELECT></TD>
+						<TD><INPUT TYPE=TEXT NAME=lon1 SIZE=10 value="0.0"></TD>
+						<TD><SELECT Name="EW1">
+						   <OPTION SELECTED>W<OPTION>E</SELECT></TD>
+					</TR>
+					
+				</TABLE>
+			</FORM>
+			<P></P>
+			<P></P>
+			
+			
+			<FORM NAME="OutputFormCD" method=POST>
+				<TABLE border=1>
+					<TR>
+						<TD><DIV ALIGN=CENTER>Distance</DIV></TD>
+		
+						<TD COLSPAN=1><INPUT TYPE=TEXT NAME=d12    SIZE=9 ></TD>
+						<TD COLSPAN=1><SELECT Name="Dunit">
+						   <OPTION SELECTED>km<OPTION>ft</SELECT>	
+						</TD>
+					</TR>
+					<CAPTION> Output
+				</TABLE>		
+				
+				<P>
+					<INPUT TYPE="button" VALUE="Compute" onClick="ComputeFormCD()">
+					<INPUT TYPE="button"  VALUE="Reset" onClick="ClearFormCD()">
+				
+				</P>
+			</FORM>
+		</CENTER>
+	</div>
 
-				<TD COLSPAN=1><INPUT TYPE=TEXT NAME=d12    SIZE=9 ></TD>
-				<TD COLSPAN=1><SELECT Name="Dunit">
-				   <OPTION SELECTED>km<OPTION>ft</SELECT>	
-				</TD>
-			</TR>
-			<CAPTION> Output
-		</TABLE>		
-		
-		<P>
-			<INPUT TYPE="button" VALUE="Compute" onClick="ComputeFormCD()">
-			<INPUT TYPE="button"  VALUE="Reset" onClick="ClearFormCD()">
-		
-		</P>
-	</FORM>
-</CENTER>
 </div>
-
+	
 </BODY>
 </HTML>
